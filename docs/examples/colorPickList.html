@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Color PickList Example - Particle Emitter</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://pixijs.download/v6.5.8/pixi.min.js"></script>
+    <script src="../../dist/particle-emitter.min.js"></script>
+    <script src="js/ParticleExample.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Color PickList Example</h1>
+        <p>Demonstrates the new pickList format for the color behavior.</p>
+        <div class="canvasContainer">
+            <canvas id="stage" width="800" height="600"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Wait for the DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create a new example
+            var example = new ParticleExample();
+            
+            // Initialize the example with the canvas
+            example.init(document.getElementById('stage'));
+            
+            // Create an emitter with the new pickList format
+            var emitter = example.createEmitter({
+                behaviors: [
+                    {
+                        type: 'alpha',
+                        config: {
+                            alpha: {
+                                list: [
+                                    { value: 0, time: 0 },
+                                    { value: 1, time: 0.1 },
+                                    { value: 0, time: 1 }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        type: 'scale',
+                        config: {
+                            scale: {
+                                list: [
+                                    { value: 0.3, time: 0 },
+                                    { value: 0.5, time: 1 }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        type: 'color',
+                        config: {
+                            color: {
+                                pickList: [
+                                    {
+                                        value: ['#ff0000', '#00ff00', '#0000ff'],
+                                        time: 0
+                                    },
+                                    {
+                                        value: ['#ffff00', '#ff00ff', '#00ffff'],
+                                        time: 0.5
+                                    },
+                                    {
+                                        value: ['#ffffff', '#888888', '#000000'],
+                                        time: 1
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    {
+                        type: 'moveSpeed',
+                        config: {
+                            speed: {
+                                list: [
+                                    { value: 200, time: 0 },
+                                    { value: 100, time: 1 }
+                                ]
+                            },
+                            minMult: 0.8
+                        }
+                    },
+                    {
+                        type: 'rotationStatic',
+                        config: {
+                            min: 0,
+                            max: 360
+                        }
+                    },
+                    {
+                        type: 'spawnShape',
+                        config: {
+                            type: 'torus',
+                            data: {
+                                x: 400,
+                                y: 300,
+                                radius: 150,
+                                innerRadius: 0,
+                                affectRotation: true
+                            }
+                        }
+                    },
+                    {
+                        type: 'textureSingle',
+                        config: {
+                            texture: 'particle.png'
+                        }
+                    }
+                ],
+                lifetime: {
+                    min: 2,
+                    max: 3
+                },
+                frequency: 0.05,
+                spawnChance: 1,
+                particlesPerWave: 10,
+                emitterLifetime: -1,
+                maxParticles: 500,
+                pos: {
+                    x: 0,
+                    y: 0
+                },
+                addAtBack: false,
+                spawnType: 'burst'
+            });
+            
+            // Start the animation loop
+            example.start();
+        });
+    </script>
+</body>
+</html>
